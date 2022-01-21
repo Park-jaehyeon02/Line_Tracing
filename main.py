@@ -8,6 +8,13 @@ from showline import *
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
+cap = cv2.VideoCapture(0)
+print("Break Point")
+retval, frame = cap.read() # frame capture
+print("Break Point2")
+cv2.imshow('test',frame)
+cv2.waitKey()
+cv2.destoryAllWindows()
 
 #이미지 가져오기
 image = cv2.imread('img/sample1.jpg')
@@ -32,7 +39,7 @@ averaged_lines = average_slope_intercept(lanelines_image, lines)
 lines_image = show_lines(lanelines_image, averaged_lines)
 
 #원본 이미지에 라인 그리기
-combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
+combine_image = cv2.addWeighted(lanelines_image, 0.5, lines_image, 1, 1)
 
 cv2.imshow('ori', lanelines_image)
 cv2.imshow("roi", lines_image)
