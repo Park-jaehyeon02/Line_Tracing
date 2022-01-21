@@ -20,7 +20,7 @@ lanelines_image = image.copy()
 """
 
 #이미지 가져오기
-image = cv2.imread('img/sample1.jpg')
+image = cv2.imread('img/sample6.jpg')
 lanelines_image = image.copy()
 
 
@@ -36,14 +36,14 @@ cv2.waitKey()
 cv2.destroyAllWindows()
 
 #라인 이어주기
-lines = cv2.HoughLinesP(roi_conversion, 1, np.pi/180, 100, minLineLength = 40, maxLineGap = 5)
+lines = cv2.HoughLinesP(roi_conversion, 1, np.pi/180, 100, minLineLength = 30, maxLineGap = 3)
 averaged_lines = average_slope_intercept(lanelines_image, lines)
 
 #선을 기울기 평균값으로 적용
 lines_image = show_lines(lanelines_image, averaged_lines)
 
 #원본 이미지에 라인 그리기
-combine_image = cv2.addWeighted(lanelines_image, 0.5, lines_image, 1, 1)
+combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
 
 cv2.imshow('ori', lanelines_image)
 cv2.imshow("roi", lines_image)
