@@ -8,17 +8,21 @@ from showline import *
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
+"""
 cap = cv2.VideoCapture(0)
-print("Break Point")
+print("Wating for a moment.....")
 retval, frame = cap.read() # frame capture
-print("Break Point2")
-cv2.imshow('test',frame)
 cv2.waitKey()
-cv2.destoryAllWindows()
+if cap.isOpened():
+    cap.release()
+image = frame.copy()
+lanelines_image = image.copy()
+"""
 
 #이미지 가져오기
 image = cv2.imread('img/sample1.jpg')
 lanelines_image = image.copy()
+
 
 # Canny Edge Processing
 #흰 검으로 변환해서 라인 검출함.
