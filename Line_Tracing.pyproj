@@ -34,17 +34,13 @@
     <Compile Include="showline.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="package1\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="img\" />
-    <Folder Include="package1\" />
+    <Folder Include="video\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="img\sample1.jpg" />
     <Content Include="README.md" />
+    <Content Include="video\test1.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
