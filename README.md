@@ -20,11 +20,11 @@ Code
 
 1. 비디오 불러오기
 
-2. ROI 적용
+2. 흰색, 황색 검출
 
-3. 흰색, 황색 검출
+3. 마스크 적용 및 Gaussian blur & canny Edge 적용
 
-4. 마스크 적용 및 Gaussian blur & canny Edge 적용
+4. ROI 적용
 
 5. Hough 변환
 
