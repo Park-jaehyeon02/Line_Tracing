@@ -34,7 +34,7 @@
     <Compile Include="line.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="showline.py">
+    <Compile Include="hough.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
