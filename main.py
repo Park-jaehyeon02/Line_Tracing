@@ -28,26 +28,34 @@ while True:
     cv2.moveWindow('white', 0, 400) 
     cv2.resizeWindow('white', 680, 400)
     cv2.namedWindow('yellow', cv2.WINDOW_NORMAL) 
-    cv2.moveWindow('yellow', 680, 0) 
+    cv2.moveWindow('yellow', 1360, 0) 
     cv2.resizeWindow('yellow', 680, 400)
     cv2.imshow('white',white_frame)
     cv2.imshow('yellow',yellow_frame)
     # white & yellow mask frame
     detected_frame = color_add(yellow_frame,white_frame)
-    mask_frame = cv2.bitwise_and(frame,frame, mask = detected_frame)
+    masked_frame = cv2.bitwise_and(frame,frame, mask = detected_frame)
     cv2.namedWindow('mask_frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('mask_frame', 680, 400) 
     cv2.resizeWindow('mask_frame', 680, 400)
-    cv2.imshow('mask_frame',mask_frame)
-    
+    cv2.imshow('mask_frame',masked_frame)
+    #Canny Edge and Gaussian Filtering
+    canny_frame,dcanny = canny_edge(masked_frame)
+    cv2.namedWindow('double_canny_frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('double_canny_frame', 680, 0) 
+    cv2.resizeWindow('double_canny_frame', 680, 400)
+    cv2.imshow('double_canny_frame',dcanny)
+    #cv2.imshow('one canny',canny_frame)
 
 
     key = cv2.waitKey(25)
     if key == 27:
         break
 
+
+#if real cam is operated,Turn off cam
 if cap.isOpened():
     cap.release()
-
+#cv windows delete
 cv2.destroyAllWindows()
 
