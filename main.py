@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 from canny import *
 from roi import *
 from line import *
@@ -9,20 +8,22 @@ from color import *
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
-
+print("Loading......")
 cap = cv2.VideoCapture('./video/test1.mp4')
-print("Wating for a moment.....")
+print("Finish Video Loading!")
 
 while True:
     retval, frame = cap.read() # frame capture
     if not retval:
         break
     white_frame,yellow_frame = color_detection(frame)
+
     #original frame
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('frame', 0, 0) 
     cv2.resizeWindow('frame', 680, 400)
     cv2.imshow('frame',frame)
+
     #yellow, white detected frame
     cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('white', 0, 400) 
@@ -32,6 +33,7 @@ while True:
     cv2.resizeWindow('yellow', 680, 400)
     cv2.imshow('white',white_frame)
     cv2.imshow('yellow',yellow_frame)
+
     # white & yellow mask frame
     detected_frame = color_add(yellow_frame,white_frame)
     masked_frame = cv2.bitwise_and(frame,frame, mask = detected_frame)
@@ -39,6 +41,7 @@ while True:
     cv2.moveWindow('mask_frame', 680, 400) 
     cv2.resizeWindow('mask_frame', 680, 400)
     cv2.imshow('mask_frame',masked_frame)
+
     #Canny Edge and Gaussian Filtering
     canny_frame,dcanny = canny_edge(masked_frame)
     cv2.namedWindow('double_canny_frame', cv2.WINDOW_NORMAL) 
@@ -46,6 +49,8 @@ while True:
     cv2.resizeWindow('double_canny_frame', 680, 400)
     cv2.imshow('double_canny_frame',dcanny)
     #cv2.imshow('one canny',canny_frame)
+
+    #
 
 
     key = cv2.waitKey(25)
