@@ -25,6 +25,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="color.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="roi.py">
       <SubType>Code</SubType>
     </Compile>

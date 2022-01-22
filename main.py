@@ -1,52 +1,43 @@
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 from canny import *
 from roi import *
 from line import *
 from showline import *
-
+from color import *
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
-"""
-cap = cv2.VideoCapture(0)
+
+cap = cv2.VideoCapture('./video/test1.mp4')
 print("Wating for a moment.....")
-retval, frame = cap.read() # frame capture
-cv2.waitKey()
+
+while True:
+    retval, frame = cap.read() # frame capture
+    if not retval:
+        break
+    white_frame,yellow_frame = color_detection(frame)
+    """ for test detection video
+    cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('frame', 0, 0) 
+    cv2.resizeWindow('frame', 680, 400)
+    cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('white', 0, 400) 
+    cv2.resizeWindow('white', 680, 400)
+    cv2.namedWindow('yellow', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('yellow', 680, 0) 
+    cv2.resizeWindow('yellow', 680, 400)
+    cv2.imshow('white',white_frame)
+    cv2.imshow('yellow',yellow_frame)
+    cv2.imshow('frame',frame)
+    """
+    key = cv2.waitKey(25)
+    if key == 27:
+        break
+
 if cap.isOpened():
     cap.release()
-image = frame.copy()
-lanelines_image = image.copy()
-"""
 
-#이미지 가져오기
-image = cv2.imread('img/sample6.jpg')
-lanelines_image = image.copy()
-
-
-# Canny Edge Processing
-#흰 검으로 변환해서 라인 검출함.
-canny_conversion = canny_edge(lanelines_image)
-roi_conversion = reg_of_interest(canny_conversion)
-
-#interim check img conversion
-cv2.imshow('Caany', canny_conversion)
-cv2.imshow('Canny_roi', roi_conversion)
-cv2.waitKey()
 cv2.destroyAllWindows()
 
-#라인 이어주기
-lines = cv2.HoughLinesP(roi_conversion, 1, np.pi/180, 100, minLineLength = 30, maxLineGap = 3)
-averaged_lines = average_slope_intercept(lanelines_image, lines)
-
-#선을 기울기 평균값으로 적용
-lines_image = show_lines(lanelines_image, averaged_lines)
-
-#원본 이미지에 라인 그리기
-combine_image = cv2.addWeighted(lanelines_image, 0.8, lines_image, 1, 1)
-
-cv2.imshow('ori', lanelines_image)
-cv2.imshow("roi", lines_image)
-cv2.imshow("combined", combine_image)
-cv2.waitKey()
-cv2.destroyAllWindows()
