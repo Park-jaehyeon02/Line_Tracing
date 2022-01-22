@@ -25,6 +25,7 @@ while True:
 
     #yellow, white detected frame
     white_frame,yellow_frame = color_detection(frame)
+
     """
     cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('white', 1360, 400) 
