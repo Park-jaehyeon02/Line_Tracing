@@ -16,15 +16,18 @@ while True:
     retval, frame = cap.read() # frame capture
     if not retval:
         break
-    white_frame,yellow_frame = color_detection(frame)
-
+    
     #original frame
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('frame', 0, 0) 
     cv2.resizeWindow('frame', 680, 400)
     cv2.imshow('frame',frame)
 
+    #ROI Setting
+    cv2.imshow('roi',reg_of_interest(frame))
+
     #yellow, white detected frame
+    white_frame,yellow_frame = color_detection(frame)
     cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('white', 0, 400) 
     cv2.resizeWindow('white', 680, 400)
