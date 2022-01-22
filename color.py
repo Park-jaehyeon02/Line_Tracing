@@ -10,3 +10,7 @@ def color_detection(frame):
     yellow_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
     yellow_frame = cv2.inRange(yellow_frame,yellow_lower,yellow_upper)
     return whilte_frame,yellow_frame
+
+def color_add(yellow,white):
+    dst1= cv2.bitwise_or(yellow,white)
+    return dst1

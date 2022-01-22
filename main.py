@@ -18,10 +18,12 @@ while True:
     if not retval:
         break
     white_frame,yellow_frame = color_detection(frame)
-    """ for test detection video
+    #original frame
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('frame', 0, 0) 
     cv2.resizeWindow('frame', 680, 400)
+    cv2.imshow('frame',frame)
+    #yellow, white detected frame
     cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('white', 0, 400) 
     cv2.resizeWindow('white', 680, 400)
@@ -30,8 +32,16 @@ while True:
     cv2.resizeWindow('yellow', 680, 400)
     cv2.imshow('white',white_frame)
     cv2.imshow('yellow',yellow_frame)
-    cv2.imshow('frame',frame)
-    """
+    # white & yellow mask frame
+    detected_frame = color_add(yellow_frame,white_frame)
+    mask_frame = cv2.bitwise_and(frame,frame, mask = detected_frame)
+    cv2.namedWindow('mask_frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('mask_frame', 680, 400) 
+    cv2.resizeWindow('mask_frame', 680, 400)
+    cv2.imshow('mask_frame',mask_frame)
+    
+
+
     key = cv2.waitKey(25)
     if key == 27:
         break
