@@ -13,6 +13,11 @@ cap = cv2.VideoCapture('./video/test1.mp4')
 #cap = cv2.VideoCapture(0)
 print("Finish Video Loading!")
 
+if not(cap.isOpened()):
+    print("Video Loading Error!")
+
+
+
 while True:
     retval, frame = cap.read() # frame capture
     if not retval:
@@ -48,19 +53,22 @@ while True:
 
     #Canny Edge and Gaussian Filtering
     #canny_frame,dcanny = canny_edge(masked_frame) test!
-    dcanny = canny_edge(masked_frame)
-    cv2.namedWindow('double_canny_frame', cv2.WINDOW_NORMAL) 
-    cv2.moveWindow('double_canny_frame', 680, 0) 
-    cv2.resizeWindow('double_canny_frame', 680, 400)
-    cv2.imshow('double_canny_frame',dcanny)
+    canny = canny_edge(masked_frame)
+    cv2.namedWindow('canny_frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('canny_frame', 680, 0) 
+    cv2.resizeWindow('canny_frame', 680, 400)
+    cv2.imshow('canny_frame',canny)
     #cv2.imshow('one canny',canny_frame)
 
     #ROI Setting
-    ori_frame = frame.copy()
-    frame = reg_of_interest(frame)
-
+    roi_frame = reg_of_interest(canny)
+    
     #Hough
-
+    lines = houghLines(roi_frame)
+    if lines is not None:
+        cv2.imshow('test',draw_line(frame,lines))
+    
+    
     key = cv2.waitKey(25)
     if key == 27:
         break

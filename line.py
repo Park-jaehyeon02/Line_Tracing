@@ -1,5 +1,12 @@
+import cv2
 import numpy as np
 
+
+def draw_line(img,lines):
+    for i in range(len(lines)):
+        for x1,y1,x2,y2 in lines[i]:
+            cv2.line(img,(x1,y1),(x2,y2),(0,0,255),3)
+    return img
 
 # 여러 선을, 하나의 선으로 만들어 주는 함수.
 #기울기와 y절편을 평균으로 해서 하나의 기울기와 y절편을 갖도록 만드는 방법.

@@ -1,10 +1,11 @@
 import cv2
 import numpy as np
+Rho = 1 # 0~1 r value(real)
+Theta = np.pi / 180 #0~180 theta value
+Threshold = 20 #meet point number
+MinLineLength = 10 
+MaxLineGap = 20 #Between Lines,Max Gap limit
 
-def show_lines(image, lines) : 
-    lines_image = np.zeros_like(image)
-    if lines is not None :
-        for i in range(len(lines)):
-            for x1,y1,x2,y2 in lines[i]:
-                cv2.line(lines_image,(x1,y1),(x2,y2),(255,0,0), 10 )
-    return lines_image
+def houghLines(edges):
+    lines = cv2.HoughLinesP(edges, Rho, Theta , 10, None, 20, 2)
+    return lines
