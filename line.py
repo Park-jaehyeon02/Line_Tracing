@@ -25,7 +25,15 @@ def draw_line2(img,lines):
     return img
 
 def separate_line(lines):
+    #check slope
     for i in range(len(lines)):
-
-    return 
+        x1,y1,x2,y2=map(int,(lines[0][i][0],lines[0][i][1],lines[0][i][2],lines[0][i][3]))
+        print(x1,y1,x2,y2)
+        if (x2-x1) == 0:
+            pass
+        elif slope_threshold > abs((y2 - y1) / (x2 - x1)):
+            print(abs((y2 - y1) / (x2 - x1))) 
+            np.delete(lines, i, axis=0)
+     
+    return lines
     
