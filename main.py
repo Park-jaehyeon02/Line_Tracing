@@ -65,10 +65,13 @@ while True:
     
     #Hough
     lines = houghLines(roi_frame)
+    cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('hough_frame', 0, 400) 
+    cv2.resizeWindow('hough_frame', 680, 400)
     if lines is None:
-        cv2.imshow('test',line_error(frame))
+        cv2.imshow('hough_frame',line_error(frame))
     else:
-        cv2.imshow('test',draw_line(frame,lines))
+        cv2.imshow('hough_frame',draw_line(frame,lines))
     
     
     key = cv2.waitKey(25)
