@@ -63,7 +63,7 @@ while True:
     #ROI Setting
     roi_frame = reg_of_interest(canny)
     
-    #Hough
+    #Hough Transform
     lines = houghLines(roi_frame)
     cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('hough_frame', 0, 400) 
@@ -72,8 +72,9 @@ while True:
         cv2.imshow('hough_frame',line_error(frame))
     else:
         cv2.imshow('hough_frame',draw_line(frame,lines))
-    
-    
+        #Average_slope_intercept
+        print(average_slope_intercept(frame,lines))
+
     key = cv2.waitKey(25)
     if key == 27:
         break
