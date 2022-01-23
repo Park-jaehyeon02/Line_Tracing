@@ -14,6 +14,13 @@ def draw_line(img,lines):
             cv2.line(img,(x1,y1),(x2,y2),(0,255,255),2)
     return img
 
+def draw_line2(img,lines):
+    print(lines,type(lines))
+    for i in range(len(lines)):
+        for x1,y1,x2,y2 in lines[i]:
+            cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
+    return img
+
 # 여러 선을, 하나의 선으로 만들어 주는 함수.
 #기울기와 y절편을 평균으로 해서 하나의 기울기와 y절편을 갖도록 만드는 방법.
 def make_coordinates(image, line_parameters):
@@ -29,7 +36,6 @@ def average_slope_intercept(image, lines):
     right_fit = []
     for line in lines:
         x1, y1, x2, y2 = line.reshape(4)
-        print(x1,y1,x2,y2)
         parameter = np.polyfit((x1, x2), (y1, y2), 1)
         slope = parameter[0]
         intercept = parameter[1]
@@ -37,9 +43,19 @@ def average_slope_intercept(image, lines):
             left_fit.append((slope, intercept))
         else:
             right_fit.append((slope, intercept))
+
     left_fit_average =np.average(left_fit, axis=0)
     right_fit_average = np.average(right_fit, axis =0)
-    left_line =make_coordinates(image, left_fit_average)
-    right_line = make_coordinates(image, right_fit_average)
+    #print(left_fit_average,np.isnan(left_fit_average),np.all(False==(np.isnan(left_fit_average))))
+    #Check Nan value
+    if (np.all(False==(np.isnan(left_fit_average)))) and (np.all(False==(np.isnan(right_fit_average)))):
+        print("Right!")
+        left_line =make_coordinates(image, left_fit_average)
+        right_line = make_coordinates(image, right_fit_average)
+        image = draw_line2(image,right_line.tolist())
+        image = draw_line2(image,left_line.flatten())
+        return image
+    else:
+        return 0
 
-    return np.array([[left_line, right_line]])
+    
