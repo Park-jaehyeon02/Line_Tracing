@@ -74,7 +74,7 @@ while True:
         cv2.imshow('hough_frame',draw_line(frame,lines))
         #Average_slope_intercept
         print(average_slope_intercept(frame,lines))
-            
+                
     key = cv2.waitKey(25)
     if key == 27:
         break
