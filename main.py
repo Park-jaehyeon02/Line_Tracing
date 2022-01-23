@@ -3,13 +3,14 @@ import numpy as np
 from canny import *
 from roi import *
 from line import *
-from showline import *
+from hough import *
 from color import *
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
 print("Loading......")
 cap = cv2.VideoCapture('./video/test1.mp4')
+#cap = cv2.VideoCapture(0)
 print("Finish Video Loading!")
 
 while True:
@@ -26,7 +27,7 @@ while True:
     #yellow, white detected frame
     white_frame,yellow_frame = color_detection(frame)
 
-    """
+    """ To check yellow or white area
     cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('white', 1360, 400) 
     cv2.resizeWindow('white', 680, 400)
