@@ -65,7 +65,9 @@ while True:
     
     #Hough
     lines = houghLines(roi_frame)
-    if lines is not None:
+    if lines is None:
+        cv2.imshow('test',line_error(frame))
+    else:
         cv2.imshow('test',draw_line(frame,lines))
     
     
