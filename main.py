@@ -16,8 +16,6 @@ print("Finish Video Loading!")
 if not(cap.isOpened()):
     print("Video Loading Error!")
 
-
-
 while True:
     retval, frame = cap.read() # frame capture
     if not retval:
