@@ -71,14 +71,16 @@ while True:
     if lines is None:
         cv2.imshow('hough_frame',line_error(frame))
     else:
-        cv2.imshow('hough_frame',draw_line(frame,lines))
+        #To test all detected line
+        #hough_frame = draw_line(frame,lines)
+        #
+        #cv2.imshow('hough_frame',hough_frame)
         #Average_slope_intercept
-        print(lines)
-        """lines = separate_line(lines)
-        cv2.namedWindow('hough_frame2', cv2.WINDOW_NORMAL)  
-        cv2.resizeWindow('hough_frame2', 680, 400)
-        cv2.imshow('hough_frame2',draw_line(frame,lines))
-        """
+        lines = separate_line(lines)
+        #cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL)  
+        #cv2.resizeWindow('hough_frame', 680, 400)
+        cv2.imshow('hough_frame',draw_line2(frame,lines))
+    cv2.imshow('test_frame',frame)
     key = cv2.waitKey(25)
     if key == 27:
         break
