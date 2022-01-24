@@ -27,8 +27,12 @@ def draw_line2(img,lines):
 def separate_line(lines):
     #check slope
     for i in range(len(lines)):
-        x1,y1,x2,y2=map(int,(lines[0][i][0],lines[0][i][1],lines[0][i][2],lines[0][i][3]))
-        print(x1,y1,x2,y2)
+        print(lines[0][0][1])
+        x1 = lines[0][i]
+        y1 = lines[1][i]
+        x2 = lines[2][i]
+        y2 = lines[3][i]
+        print(x1)
         if (x2-x1) == 0:
             pass
         elif slope_threshold > abs((y2 - y1) / (x2 - x1)):
