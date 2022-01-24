@@ -80,7 +80,6 @@ while True:
         #cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL)  
         #cv2.resizeWindow('hough_frame', 680, 400)
         cv2.imshow('hough_frame',draw_line2(frame,lines))
-    cv2.imshow('test_frame',frame)
     key = cv2.waitKey(25)
     if key == 27:
         break
