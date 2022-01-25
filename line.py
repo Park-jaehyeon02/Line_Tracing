@@ -29,7 +29,7 @@ def draw_line2(img,lines):
             cv2.line(dst,(x1,y1),(x2,y2),(255,0,255),3)
     return dst
 
-def separate_line(lines):
+def separate_line(lines,width):
     del_list = []
     #check slope
     for i in range(len(lines)):
@@ -47,4 +47,14 @@ def separate_line(lines):
     for i in del_list:
         lines = np.delete(lines,i-cnt,axis=0)
         cnt += 1
-    return lines
+    right_line = np.empty((0,1,4), int)
+    left_line = np.empty((0,1,4), int)
+    print(lines.shape)
+    for i in range(len(lines)):
+        x1 = lines[i][0][0]
+        x2 = lines[i][0][2]
+        if (x1+x2)/2 > width/2:
+            right_line = np.append(right_line,[lines[i]],axis=0)
+        else:
+            left_line = np.append(left_line,[lines[i]],axis=0)
+    return right_line, left_line, lines
