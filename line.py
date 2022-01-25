@@ -49,7 +49,6 @@ def separate_line(lines,width):
         cnt += 1
     right_line = np.empty((0,1,4), int)
     left_line = np.empty((0,1,4), int)
-    print(lines.shape)
     for i in range(len(lines)):
         x1 = lines[i][0][0]
         x2 = lines[i][0][2]
@@ -58,3 +57,28 @@ def separate_line(lines,width):
         else:
             left_line = np.append(left_line,[lines[i]],axis=0)
     return right_line, left_line, lines
+
+def fit_line(r_lines,l_lines): 
+    """
+    r_line = []
+    l_line = []
+    print('r',r_lines)
+    print('l',l_lines)
+    for i in range(len(r_lines)):
+        x1 = r_lines[i][0][0]
+        y1 = r_lines[i][0][1]
+        x2 = r_lines[i][0][2]
+        y2 = r_lines[i][0][3]
+        r_line.append([x1,y1,x2,y2])
+    for i in range(len(l_lines)):
+        x1 = l_lines[i][0][0]
+        y1 = l_lines[i][0][1]
+        x2 = l_lines[i][0][2]
+        y2 = l_lines[i][0][3]
+        l_line.append([x1,y1,x2,y2])
+    print('r',r_line[0])
+    print('l',l_line)
+    """
+    r_lines = cv2.fitLine(r_lines[0],cv2.DIST_L2,0,0.01,0.01,line = None)
+    l_lines = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
+    return r_lines,l_lines
