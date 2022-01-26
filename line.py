@@ -59,29 +59,14 @@ def separate_line(lines,width):
     return right_line, left_line, lines
 
 def fit_line(r_lines,l_lines): 
+    #tranform 4*n mat to 2*2n mat for fitLine func
     r_lines = np.squeeze(r_lines)
     r_lines = r_lines.reshape(r_lines.shape[0]*2,2)
+    l_lines = np.squeeze(l_lines)
+    l_lines = l_lines.reshape(l_lines.shape[0]*2,2)
+
+    vx,vy,x,y = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01,line = None)
+    vx2,vy2,x2,y2 = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
+    
     print(r_lines)
-    """
-    r_line = []
-    l_line = []
-    print('r',r_lines)
-    print('l',l_lines)
-    for i in range(len(r_lines)):
-        x1 = r_lines[i][0][0]
-        y1 = r_lines[i][0][1]
-        x2 = r_lines[i][0][2]
-        y2 = r_lines[i][0][3]
-        r_line.append([x1,y1,x2,y2])
-    for i in range(len(l_lines)):
-        x1 = l_lines[i][0][0]
-        y1 = l_lines[i][0][1]
-        x2 = l_lines[i][0][2]
-        y2 = l_lines[i][0][3]
-        l_line.append([x1,y1,x2,y2])
-    print('r',r_line[0])
-    print('l',l_line)
-    """
-    r_lines = cv2.fitLine(r_lines[0],cv2.DIST_L2,0,0.01,0.01,line = None)
-    l_lines = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
     return r_lines,l_lines

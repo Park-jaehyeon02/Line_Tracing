@@ -84,12 +84,12 @@ while True:
         cv2.namedWindow('Line_frame', cv2.WINDOW_NORMAL) 
         #cv2.moveWindow('Line_frame', 6, 400) 
         cv2.resizeWindow('Line_frame', 680, 400)
-        if right_lines.size == 0 or left_lines.size == 0:
+        if right_lines.size < 2 or left_lines.size < 2:
             cv2.imshow('Line_frame',line_error(frame))
         else:
-           #detected_line = fit_line(right_lines , left_lines)
-           # cv2.imshow('Line_frame',draw_line2(frame,detected_line))
-           pass
+           detected_line = fit_line(right_lines , left_lines)
+           cv2.imshow('Line_frame',draw_line2(frame,detected_line))
+           
 
     key = cv2.waitKey(25)
     if key == 27:
