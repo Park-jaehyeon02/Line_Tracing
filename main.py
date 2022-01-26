@@ -87,7 +87,7 @@ while True:
         if right_lines.size < 2 or left_lines.size < 2:
             cv2.imshow('Line_frame',line_error(frame))
         else:
-           detected_line = fit_line(right_lines , left_lines)
+           detected_line = fit_line(frame, right_lines , left_lines)
            cv2.imshow('Line_frame',draw_line2(frame,detected_line))
            
 

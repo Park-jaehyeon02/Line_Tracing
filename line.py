@@ -58,15 +58,22 @@ def separate_line(lines,width):
             left_line = np.append(left_line,[lines[i]],axis=0)
     return right_line, left_line, lines
 
-def fit_line(r_lines,l_lines): 
+def fit_line(img,r_lines,l_lines): 
     #tranform 4*n mat to 2*2n mat for fitLine func
     r_lines = np.squeeze(r_lines)
     r_lines = r_lines.reshape(r_lines.shape[0]*2,2)
     l_lines = np.squeeze(l_lines)
     l_lines = l_lines.reshape(l_lines.shape[0]*2,2)
+    #fitLine Func
+    r_lines = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01,line = None)
+    l_lines = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
+    #calculate line x,y points
+    r_m = r_lines[1]/r_lines[0]
+    l_m = l_lines[1]/l_lines[0]
+    r_x , r_y = r_lines[2], r_lines[3]
+    l_x , l_y = l_lines[2], l_lines[3]
 
-    vx,vy,x,y = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01,line = None)
-    vx2,vy2,x2,y2 = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
-    
+
+
     print(r_lines)
     return r_lines,l_lines
