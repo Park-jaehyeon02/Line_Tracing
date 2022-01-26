@@ -1,6 +1,6 @@
 import cv2
 
-white_lower = (155,155,155)
+white_lower = (130,130,130)
 white_upper = (255,255,255)
 yellow_lower = (10,100,100)
 yellow_upper = (40,255,255)

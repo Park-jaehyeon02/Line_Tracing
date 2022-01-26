@@ -59,6 +59,9 @@ def separate_line(lines,width):
     return right_line, left_line, lines
 
 def fit_line(r_lines,l_lines): 
+    r_lines = np.squeeze(r_lines)
+    r_lines = r_lines.reshape(r_lines.shape[0]*2,2)
+    print(r_lines)
     """
     r_line = []
     l_line = []

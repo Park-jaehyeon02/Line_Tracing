@@ -87,9 +87,9 @@ while True:
         if right_lines.size == 0 or left_lines.size == 0:
             cv2.imshow('Line_frame',line_error(frame))
         else:
-            detected_line = fit_line(right_lines , left_lines)
-            cv2.imshow('Line_frame',draw_line2(frame,detected_line))
-
+           #detected_line = fit_line(right_lines , left_lines)
+           # cv2.imshow('Line_frame',draw_line2(frame,detected_line))
+           pass
 
     key = cv2.waitKey(25)
     if key == 27:
