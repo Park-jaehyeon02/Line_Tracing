@@ -75,7 +75,7 @@ def fit_line(img,r_lines,l_lines):
     l_x , l_y = l_lines[2], l_lines[3]
     y1 = int(img.shape[0])
     y2 = int(img.shape[0]/2)
-    
+    print(r_m,y1,y2,r_y,r_X)
     rx_line1 = int((y1-r_y/r_m)+r_x)
     rx_line2 = int((y2-r_y/r_m)+r_x)
     lx_line1 = int((y1-l_y/l_m)+l_x)
@@ -85,4 +85,5 @@ def fit_line(img,r_lines,l_lines):
     points = []
     points.append([rx_line1,y1,rx_line2,y2])
     points.append([lx_line1,y1,lx_line2,y2])
+    print(points)
     return points
