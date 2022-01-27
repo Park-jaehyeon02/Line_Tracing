@@ -29,6 +29,12 @@ def draw_line2(img,lines):
             cv2.line(dst,(x1,y1),(x2,y2),(255,0,255),3)
     return dst
 
+def draw_line3(img,lines):
+    dst = img.copy()
+    for x1,y1,x2,y2 in lines:
+        cv2.line(dst,(x1,y1),(x2,y2),(255,0,255),3)
+    return dst
+
 def separate_line(lines,width):
     del_list = []
     #check slope
@@ -65,7 +71,7 @@ def fit_line(img,r_lines,l_lines):
     l_lines = np.squeeze(l_lines)
     l_lines = l_lines.reshape(l_lines.shape[0]*2,2)
     #fitLine Func
-    r_lines = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01,line = None)
+    r_lines = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01)
     l_lines = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
     print(r_lines,l_lines)
     #calculate line x,y points
@@ -75,10 +81,13 @@ def fit_line(img,r_lines,l_lines):
     l_x , l_y = l_lines[2], l_lines[3]
     y1 = int(img.shape[0])
     y2 = int(img.shape[0]/2)
+    #height 720 points
     rx_line1 = int(((y1-r_y)/r_m)+r_x)
-    print(y2,r_y,r_y-y2)
-    rx_line2 = int(((r_y-y2)/r_m)+r_x)
     lx_line1 = int(((y1-l_y)/l_m)+l_x)
+    #height 360 points
+    print('t',r_m,l_m,y2,r_y)
+    print('t2',(y2-r_y)/r_m,r_x)
+    rx_line2 = int(((y2-r_y)/r_m)+r_x)
     lx_line2 = int(((l_y-y2)/l_m)+l_x)
 
     #return val r,l

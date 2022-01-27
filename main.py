@@ -88,7 +88,7 @@ while True:
             cv2.imshow('Line_frame',line_error(frame))
         else:
            detected_line = fit_line(frame, right_lines , left_lines)
-           cv2.imshow('Line_frame',draw_line2(frame,detected_line))
+           cv2.imshow('Line_frame',draw_line3(frame,detected_line))
            
 
     key = cv2.waitKey(25)
