@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 #except inclination
-slope_threshold = 0.3
+slope_threshold = 0.5
 
 def line_error(img):
     text="Not Found Line!" 
@@ -29,10 +29,21 @@ def draw_line2(img,lines):
             cv2.line(dst,(x1,y1),(x2,y2),(255,0,255),3)
     return dst
 
+#Draw fill func
 def draw_line3(img,lines):
     dst = img.copy()
+    img_dst = np.zeros_like(dst)
     for x1,y1,x2,y2 in lines:
-        cv2.line(dst,(x1,y1),(x2,y2),(255,0,255),3)
+        cv2.line(img_dst,(x1,y1),(x2,y2),(255,0,0),5)
+    line_point = []
+    line_point.append([lines[0][0],lines[0][1]])
+    line_point.append([lines[0][2],lines[0][3]])
+    line_point.append([lines[1][2],lines[1][3]])
+    line_point.append([lines[1][0],lines[1][1]])
+   
+    line_point = np.array(line_point)
+    cv2.fillConvexPoly(img_dst,line_point,color=(0,200,50),lineType = cv2.LINE_AA)
+    dst = cv2.addWeighted(dst,1,img_dst,0.3,0)
     return dst
 
 def separate_line(lines,width):
@@ -65,7 +76,6 @@ def separate_line(lines,width):
     return right_line, left_line, lines
 
 def fit_line(img,r_lines,l_lines): 
-    print(r_lines,l_lines)
     #tranform 4*n mat to 2*2n mat for fitLine func
     r_lines = np.squeeze(r_lines)
     r_lines = r_lines.reshape(r_lines.shape[0]*2,2)
@@ -74,7 +84,6 @@ def fit_line(img,r_lines,l_lines):
     #fitLine Func
     r_lines = cv2.fitLine(r_lines,cv2.DIST_L2,0,0.01,0.01)
     l_lines = cv2.fitLine(l_lines,cv2.DIST_L2,0,0.01,0.01)
-    print(r_lines,l_lines)
     #calculate line x,y points
     r_m = r_lines[1]/r_lines[0]
     l_m = l_lines[1]/l_lines[0]

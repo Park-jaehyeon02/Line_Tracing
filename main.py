@@ -22,11 +22,12 @@ while True:
         break
     
     #original frame
+    """
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
     cv2.moveWindow('frame', 0, 0) 
     cv2.resizeWindow('frame', 680, 400)
     cv2.imshow('frame',frame)
-
+    """
     #yellow, white detected frame
     white_frame,yellow_frame = color_detection(frame)
 
@@ -67,6 +68,10 @@ while True:
     cv2.moveWindow('hough_frame', 0, 400) 
     cv2.resizeWindow('hough_frame', 680, 400)
 
+    cv2.namedWindow('Line_frame', cv2.WINDOW_NORMAL) 
+    cv2.moveWindow('Line_frame', 0, 0) 
+    cv2.resizeWindow('Line_frame', 680, 400)
+    
     if lines is None:
         cv2.imshow('hough_frame',line_error(frame))
     else:
@@ -84,8 +89,7 @@ while True:
         cv2.namedWindow('Line_frame', cv2.WINDOW_NORMAL) 
         #cv2.moveWindow('Line_frame', 6, 400) 
         cv2.resizeWindow('Line_frame', 680, 400)
-        print(right_lines.size)
-        if right_lines.size < 13 or left_lines.size < 13:
+        if right_lines.size < 12 or left_lines.size < 12:
             cv2.imshow('Line_frame',line_error(frame))
         else:
            detected_line = fit_line(frame, right_lines , left_lines)
