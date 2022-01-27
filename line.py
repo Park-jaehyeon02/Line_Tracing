@@ -65,6 +65,7 @@ def separate_line(lines,width):
     return right_line, left_line, lines
 
 def fit_line(img,r_lines,l_lines): 
+    print(r_lines,l_lines)
     #tranform 4*n mat to 2*2n mat for fitLine func
     r_lines = np.squeeze(r_lines)
     r_lines = r_lines.reshape(r_lines.shape[0]*2,2)
@@ -80,19 +81,16 @@ def fit_line(img,r_lines,l_lines):
     r_x , r_y = r_lines[2], r_lines[3]
     l_x , l_y = l_lines[2], l_lines[3]
     y1 = int(img.shape[0])
-    y2 = int(img.shape[0]/2)
+    y2 = int(img.shape[0]*2/3)
     #height 720 points
     rx_line1 = int(((y1-r_y)/r_m)+r_x)
     lx_line1 = int(((y1-l_y)/l_m)+l_x)
     #height 360 points
-    print('t',r_m,l_m,y2,r_y)
-    print('t2',(y2-r_y)/r_m,r_x)
     rx_line2 = int(((y2-r_y)/r_m)+r_x)
-    lx_line2 = int(((l_y-y2)/l_m)+l_x)
+    lx_line2 = int(((y2-l_y)/l_m)+l_x)
 
     #return val r,l
     points = []
     points.append([rx_line1,y1,rx_line2,y2])
     points.append([lx_line1,y1,lx_line2,y2])
-    print(points)
     return points

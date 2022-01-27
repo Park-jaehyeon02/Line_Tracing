@@ -84,7 +84,8 @@ while True:
         cv2.namedWindow('Line_frame', cv2.WINDOW_NORMAL) 
         #cv2.moveWindow('Line_frame', 6, 400) 
         cv2.resizeWindow('Line_frame', 680, 400)
-        if right_lines.size < 2 or left_lines.size < 2:
+        print(right_lines.size)
+        if right_lines.size < 8 or left_lines.size < 8:
             cv2.imshow('Line_frame',line_error(frame))
         else:
            detected_line = fit_line(frame, right_lines , left_lines)
