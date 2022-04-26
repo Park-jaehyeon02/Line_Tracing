@@ -1,3 +1,5 @@
+#-*-coding:CP949-*-
+
 import cv2
 import numpy as np
 from canny import *
@@ -5,6 +7,10 @@ from roi import *
 from line import *
 from hough import *
 from color import *
+import datetime
+
+fourcc = cv2.VideoWriter_fourcc(*'FMP4')
+rv = True
 
 #print(cv2.__version__) check cv2 version ->test version is 4.5.5
 
@@ -15,6 +21,7 @@ print("Finish Video Loading!")
 
 if not(cap.isOpened()):
     print("Video Loading Error!")
+
 
 while True:
     retval, frame = cap.read() # frame capture
@@ -90,17 +97,24 @@ while True:
         #cv2.moveWindow('Line_frame', 6, 400) 
         cv2.resizeWindow('Line_frame', 680, 400)
         if right_lines.size < 12 or left_lines.size < 12:
-            cv2.imshow('Line_frame',line_error(frame))
+            Fin_frame = line_error(frame)
         else:
            detected_line = fit_line(frame, right_lines , left_lines)
-           cv2.imshow('Line_frame',draw_line3(frame,detected_line))
-           
+           Fin_frame = draw_line3(frame,detected_line)
+        cv2.imshow("Line_frame",Fin_frame)
+        #recoding output
+        if (rv):
+           video = cv2.VideoWriter("C:/Users/¹ÚÀçÇö\source/repos/Park-jaehyeon02/Line_Tracing/video/"+str(datetime.datetime.now().strftime("%d_%H-%M-%S"))+".mp4",fourcc,20.0,(Fin_frame.shape[1],Fin_frame.shape[0]))
+           rv = False
+        video.write(Fin_frame)
+
 
     key = cv2.waitKey(25)
     if key == 27:
+
         break
 
-
+video.release()
 #if real cam is operated,Turn off cam
 if cap.isOpened():
     cap.release()
