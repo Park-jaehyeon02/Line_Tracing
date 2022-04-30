@@ -39,6 +39,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test_cv_installed.py" />
+    <Compile Include="record.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="video\" />

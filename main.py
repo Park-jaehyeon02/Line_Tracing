@@ -1,18 +1,23 @@
 #-*-coding:CP949-*-
 
 import cv2
+import copy
 import numpy as np
 from canny import *
 from roi import *
 from line import *
 from hough import *
 from color import *
-import datetime
+from record import *
 
-fourcc = cv2.VideoWriter_fourcc(*'FMP4')
-rv = True
 
-#print(cv2.__version__) check cv2 version ->test version is 4.5.5
+RECORDING = False
+if RECORDING:
+    r_fin_frame = True
+else:
+    r_fin_frame = False
+
+
 
 print("Loading......")
 cap = cv2.VideoCapture('./video/test1.mp4')
@@ -27,27 +32,8 @@ while True:
     retval, frame = cap.read() # frame capture
     if not retval:
         break
-    
-    #original frame
-    """
-    cv2.namedWindow('frame', cv2.WINDOW_NORMAL) 
-    cv2.moveWindow('frame', 0, 0) 
-    cv2.resizeWindow('frame', 680, 400)
-    cv2.imshow('frame',frame)
-    """
-    #yellow, white detected frame
-    white_frame,yellow_frame = color_detection(frame)
 
-    """ To check yellow or white area
-    cv2.namedWindow('white', cv2.WINDOW_NORMAL) 
-    cv2.moveWindow('white', 1360, 400) 
-    cv2.resizeWindow('white', 680, 400)
-    cv2.namedWindow('yellow', cv2.WINDOW_NORMAL) 
-    cv2.moveWindow('yellow', 1360, 0) 
-    cv2.resizeWindow('yellow', 680, 400)
-    cv2.imshow('white',white_frame)
-    cv2.imshow('yellow',yellow_frame)
-    """
+    white_frame,yellow_frame = color_detection(frame)
 
     # white & yellow mask frame
     detected_frame = color_add(yellow_frame,white_frame)
@@ -69,6 +55,8 @@ while True:
     #ROI Setting
     roi_frame = reg_of_interest(canny)
     
+    #이 부분에서 ROI를 나누면 될듯
+
     #Hough Transform
     lines = houghLines(roi_frame)
     cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL) 
@@ -82,18 +70,12 @@ while True:
     if lines is None:
         cv2.imshow('hough_frame',line_error(frame))
     else:
-        #To test all detected line
-        #hough_frame = draw_line(frame,lines)
-        #
-        #cv2.imshow('hough_frame',hough_frame)
-        #Average_slope_intercept
-        #cv2.namedWindow('hough_frame', cv2.WINDOW_NORMAL)  
-        #cv2.resizeWindow('hough_frame', 680, 400)
         right_lines , left_lines, lines = separate_line(lines,frame.shape[1])
         cv2.imshow('hough_frame',draw_line2(frame,lines))
         
         #fit right and left line
         cv2.namedWindow('Line_frame', cv2.WINDOW_NORMAL) 
+
         #cv2.moveWindow('Line_frame', 6, 400) 
         cv2.resizeWindow('Line_frame', 680, 400)
         if right_lines.size < 12 or left_lines.size < 12:
@@ -102,22 +84,27 @@ while True:
            detected_line = fit_line(frame, right_lines , left_lines)
            Fin_frame = draw_line3(frame,detected_line)
         cv2.imshow("Line_frame",Fin_frame)
-        #recoding output
-        if (rv):
-           video = cv2.VideoWriter("C:/Users/박재현\source/repos/Park-jaehyeon02/Line_Tracing/video/"+str(datetime.datetime.now().strftime("%d_%H-%M-%S"))+".mp4",fourcc,20.0,(Fin_frame.shape[1],Fin_frame.shape[0]))
-           rv = False
-        video.write(Fin_frame)
+        
+        #Fin_frame_Recording
+        if r_fin_frame:
+            Fin_recorder = recorder("Fin_frame",Fin_frame)
+            r_fin_frame = False
+        
+        if RECORDING:
+            Fin_recorder.write(Fin_frame)
 
-
+    #End method
     key = cv2.waitKey(25)
     if key == 27:
-
         break
+    
 
-video.release()
-#if real cam is operated,Turn off cam
+
+if RECORDING:
+    Fin_recorder.release()
+
+
 if cap.isOpened():
     cap.release()
-#cv windows delete
 cv2.destroyAllWindows()
 
