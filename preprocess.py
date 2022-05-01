@@ -1,5 +1,11 @@
 import cv2
 
+def canny_edge(image) :
+    gray_conversion = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blur_conversion = cv2.GaussianBlur(gray_conversion, (5,5), 0)
+    canny_conversion = cv2.Canny(blur_conversion, 50, 150) 
+    return canny_conversion
+
 white_lower = (130,130,130)
 white_upper = (255,255,255)
 yellow_lower = (10,100,100)
